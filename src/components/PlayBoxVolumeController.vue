@@ -2,7 +2,7 @@
   <div class="play-box-volume-controller">
     <mu-icon :value="isMute ? 'volume_off' : 'volume_up'" :size="16" color="#DCDCDC" @click="toggleMute"></mu-icon>
     <div class="play-box-volume-controllers-content">
-      <mu-slider v-model="currentVolume" :disabled="isMute" class="play-box-volume-slider"></mu-slider>
+      <mu-slider v-model="currentVolume" :disabled="isMute" :step="1" :min="0" :max="100"></mu-slider>
     </div>
   </div>
 </template>
@@ -45,5 +45,4 @@
       margin: 0;
     }
   }
-
 </style>

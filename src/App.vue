@@ -2,12 +2,19 @@
   <div id="app">
     <play-box></play-box>
 
-    <router-view></router-view>
+    <mu-tabs id="main-nav" :value="currentTab" @change="changeTab">
+      <mu-tab value="PlayList" icon="queue_music"></mu-tab>
+      <mu-tab value="2" icon="album"></mu-tab>
+      <mu-tab value="3" icon="radio"></mu-tab>
+    </mu-tabs>
+
+    <play-list v-show="currentTab === 'PlayList'"></play-list>
   </div>
 </template>
 
 <script>
   import PlayBox from './components/PlayBox.vue'
+  import PlayList from './pages/PlayList.vue'
   import 'muse-ui/dist/muse-ui.css'
   import './styles/style.less'
 
@@ -15,6 +22,44 @@
     name: 'app',
     components: {
       PlayBox,
+      PlayList,
+    },
+    data () {
+      return {
+        currentTab: 'PlayList',
+      }
+    },
+    methods: {
+      changeTab (val) {
+        this.currentTab = val
+      }
     }
   }
 </script>
+
+<style lang="less">
+  @import "styles/var";
+
+  #main-nav {
+    height: 30px;
+
+    .mu-tab-link {
+      min-height: 30px;
+      padding: 0;
+
+      .mu-icon {
+        font-size: 20px;
+      }
+    }
+
+    .mu-tab-active {
+      .mu-icon {
+        color: @MP-PRIMARY-COLOR;
+      }
+    }
+
+    .mu-tab-link-highlight {
+      background-color: @MP-PRIMARY-COLOR;
+    }
+  }
+</style>

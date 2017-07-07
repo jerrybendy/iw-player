@@ -1,5 +1,5 @@
 <template>
-  <div id="play-box">
+  <div id="play-box" class="mu-paper mu-paper-3">
     <div class="play-box-main">
       <play-box-album-cover></play-box-album-cover>
       <div class="play-box-controllers">
@@ -13,6 +13,7 @@
         </div>
       </div>
     </div>
+    <play-box-progress></play-box-progress>
   </div>
 </template>
 
@@ -20,12 +21,14 @@
   import PlayBoxAlbumCover from './PlayBoxAlbumCover.vue'
   import PlayBoxControlButton from './PlayBoxControlButton.vue'
   import PlayBoxVolumeController from './PlayBoxVolumeController.vue'
+  import PlayBoxProgress from './PlayBoxProgress.vue'
 
   export default {
     components: {
       PlayBoxAlbumCover,
       PlayBoxControlButton,
       PlayBoxVolumeController,
+      PlayBoxProgress,
     }
   }
 </script>
@@ -40,6 +43,7 @@
 
     .play-box-main {
       display: flex;
+      margin-bottom: 6px;
     }
 
     .play-box-controllers {

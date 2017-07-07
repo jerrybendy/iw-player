@@ -12,7 +12,17 @@ let win = null;
 app.on('ready', function () {
 
   // Initialize the window to our specified dimensions
-  win = new BrowserWindow({width: 1000, height: 600});
+  win = new BrowserWindow({
+    title: 'Music Player',
+    // frame: false,
+    width: 320,
+    height: 640,
+    minWidth: 320,
+    resizable: false,
+    maximizable: false,
+    fullscreenable: false,
+    backgroundColor: '#383838',
+  });
 
   // Specify entry point to default entry point of vue.js
   win.loadURL('http://localhost:9090');
