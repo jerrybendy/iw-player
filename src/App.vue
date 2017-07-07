@@ -1,23 +1,20 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <play-box></play-box>
+
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
-</script>
+  import PlayBox from './components/PlayBox.vue'
+  import 'muse-ui/dist/muse-ui.css'
+  import './styles/style.less'
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  export default {
+    name: 'app',
+    components: {
+      PlayBox,
+    }
+  }
+</script>
