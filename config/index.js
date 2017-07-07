@@ -2,6 +2,22 @@
 var path = require('path')
 
 module.exports = {
+  common: {
+    externals: [
+      'fs',
+      'desktop-capturer',
+      'electron',
+      'ipc',
+      'ipc-renderer',
+      'native-image',
+      'remote',
+      'web-frame',
+      'clipboard',
+      'crash-reporter',
+      'screen',
+      'shell'
+    ]
+  },
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),

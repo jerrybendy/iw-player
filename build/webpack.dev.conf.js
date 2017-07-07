@@ -30,6 +30,8 @@ module.exports = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true
     }),
-    new FriendlyErrorsPlugin()
+    new FriendlyErrorsPlugin(),
+    // add externals for electron
+    new webpack.ExternalsPlugin('commonjs', config.common.externals),
   ]
 })

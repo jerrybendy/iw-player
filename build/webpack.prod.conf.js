@@ -90,7 +90,9 @@ var webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    // add externals for electron
+    new webpack.ExternalsPlugin('commonjs', config.common.externals),
   ]
 })
 

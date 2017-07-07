@@ -8,7 +8,7 @@
       <mu-tab value="3" icon="radio"></mu-tab>
     </mu-tabs>
 
-    <play-list v-show="currentTab === 'PlayList'"></play-list>
+    <play-list v-show="currentTab === 'PlayList'" class="main-page-content"></play-list>
   </div>
 </template>
 
@@ -39,6 +39,19 @@
 
 <style lang="less">
   @import "styles/var";
+
+  html, body, #app {
+    height: 100%;
+  }
+
+  #app {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-page-content {
+    flex: 1;
+  }
 
   #main-nav {
     height: 30px;

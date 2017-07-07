@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A simple music player for developers",
   "author": "Jerry Bendy <jerry@icewingcc.com>",
-  "main": "main/index.js",
+  "main": "main.js",
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
@@ -11,6 +11,7 @@
     "electron": "electron ."
   },
   "dependencies": {
+    "dragula": "^3.7.2",
     "electron": "^1.6.11",
     "muse-ui": "^2.1.0",
     "vue": "^2.3.3",
