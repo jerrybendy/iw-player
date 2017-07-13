@@ -4,11 +4,13 @@
        @dragleave="handleDragLeave"
        @dragend="handleDragEnd"
        @drop="handleDrop">
-    <play-list-item></play-list-item>
-    <play-list-item></play-list-item>
-    <play-list-item></play-list-item>
-    <play-list-item></play-list-item>
-    <play-list-item></play-list-item>
+
+
+    <play-list-item
+        v-for="item in playList"
+        :key="item.id"
+        :data="item"
+    ></play-list-item>
   </div>
 </template>
 
@@ -18,6 +20,7 @@
   import audio from '../lib/audio'
   import PlayListItem from '../components/PlayListItem.vue'
   import playStateTypes from '../stores/playState/types'
+  import playListTypes from '../stores/playList/types'
 
   export default {
     components: {
@@ -26,6 +29,12 @@
 
     data () {
       return {
+      }
+    },
+
+    computed: {
+      playList () {
+        return this.$store.state.playList.list
       }
     },
 
@@ -55,8 +64,14 @@
       handleDrop (e) {
         e.stopPropagation()
         e.preventDefault()
+
         for (let f of e.dataTransfer.files) {
-          this.$store.commit(playStateTypes.PLAY_FILE, f.path)
+          if (/^audio\//i.test(f.type)) {
+            this.$store.commit(playListTypes.ADD, {
+              title: f.name,
+              path: f.path,
+            })
+          }
         }
         return false;
       }

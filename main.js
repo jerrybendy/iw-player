@@ -6,10 +6,13 @@
  */
 
 const {app, BrowserWindow} = require('electron')
+const vueDevTools = require('vue-devtools')
 
 let win = null;
 
 app.on('ready', function () {
+
+  vueDevTools.install()
 
   // Initialize the window to our specified dimensions
   win = new BrowserWindow({
@@ -23,6 +26,9 @@ app.on('ready', function () {
     fullscreenable: false,
     backgroundColor: '#383838',
   });
+
+  // load main window handler
+  require('./main/mainHandler')(win);
 
   // Specify entry point to default entry point of vue.js
   win.loadURL('http://localhost:9090');

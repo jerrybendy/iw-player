@@ -52,6 +52,8 @@
 
   .main-page-content {
     flex: 1;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   #main-nav {
