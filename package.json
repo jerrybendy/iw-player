@@ -8,11 +8,13 @@
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
-    "electron": "electron ."
+    "electron": "electron .",
+    "debug": "electron --debug=5858 ."
   },
   "dependencies": {
     "dragula": "^3.7.2",
     "electron": "^1.6.11",
+    "lowdb": "^0.16.2",
     "muse-ui": "^2.1.0",
     "vue": "^2.3.3",
     "vue-router": "^2.3.1"

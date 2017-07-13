@@ -5,8 +5,6 @@
  * @copyright MicroBenefits
  */
 
-const path = require('path')
-const url = require('url')
 const {app, BrowserWindow} = require('electron')
 
 let win = null;
@@ -27,12 +25,8 @@ app.on('ready', function () {
   });
 
   // Specify entry point to default entry point of vue.js
-  // win.loadURL('http://localhost:9090');
-  win.loadURL(url.format({
-    pathname: path.join(__dirname, 'dist/index.html'),
-    protocol: 'file:',
-    slashes: true,
-  }));
+  win.loadURL('http://localhost:9090');
+  // win.loadURL('file://' + __dirname + '/dist/index.html');
 
   // Remove window once app is closed
   win.on('closed', function () {

@@ -9,14 +9,13 @@
     <play-list-item></play-list-item>
     <play-list-item></play-list-item>
     <play-list-item></play-list-item>
-
-    <audio :src="audioSrc" controls></audio>
   </div>
 </template>
 
 <script>
   import dragula from 'dragula'
   import {shell} from 'electron'
+  import audio from '../lib/audio'
   import PlayListItem from '../components/PlayListItem.vue'
   import 'dragula/dist/dragula.css'
 
@@ -27,7 +26,6 @@
 
     data () {
       return {
-        audioSrc: '',
       }
     },
 
@@ -59,8 +57,7 @@
         e.preventDefault()
         for (let f of e.dataTransfer.files) {
           console.log('File(s) you dragged here: ', f)
-//          this.audioSrc = window.URL.createObjectURL(f.path)
-          shell.openItem(f.path)
+          audio.playFile(f.path)
         }
         return false;
       }
