@@ -2,7 +2,6 @@
  *
  * @author    Jerry Bendy
  * @since     7/8/2017
- * @copyright MicroBenefits
  */
 
 import fs from 'fs'
@@ -12,6 +11,50 @@ const $audioContext = new AudioContext()
 const _bufferAudio = new BufferAudio($audioContext)
 
 window.bufferAudio = _bufferAudio
+
+export default {
+
+  playFile (filePath) {
+    // get the ArrayBuffer object for current sound
+    return getBuffer(filePath)
+      .then(buffer => {
+        _bufferAudio
+          .initNewBuffer(buffer)
+          .play()
+
+        return {
+          source: _bufferAudio._source,
+          duration: buffer.duration,
+          length: buffer.length,
+          sampleRate: buffer.sampleRate,
+        }
+      })
+      .catch(e => {
+        alert(e.message)
+      })
+  },
+
+  play () {
+    _bufferAudio.play()
+  },
+
+  pause () {
+    _bufferAudio.pause()
+  },
+
+  stop () {
+    _bufferAudio.stop()
+  },
+
+  seek (playbackTime) {
+    _bufferAudio.seek(playbackTime)
+  },
+
+  get isPlaying () {
+    return _bufferAudio._isPlaying
+  }
+}
+
 
 
 /**
@@ -41,37 +84,4 @@ function getBuffer(filePath) {
       })
     })
   })
-}
-
-
-export default {
-
-  playFile (filePath) {
-    // get the ArrayBuffer object for current sound
-    getBuffer(filePath)
-      .then(buffer => {
-        _bufferAudio
-          .initNewBuffer(buffer)
-          .play()
-      })
-      .catch(e => {
-        alert(e.message)
-      })
-  },
-
-  play () {
-    _bufferAudio.play()
-  },
-
-  pause () {
-    _bufferAudio.pause()
-  },
-
-  stop () {
-    _bufferAudio.stop()
-  },
-
-  seek (playbackTime) {
-    _bufferAudio.seek(playbackTime)
-  },
 }

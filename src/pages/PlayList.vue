@@ -17,7 +17,7 @@
   import {shell} from 'electron'
   import audio from '../lib/audio'
   import PlayListItem from '../components/PlayListItem.vue'
-  import 'dragula/dist/dragula.css'
+  import playStateTypes from '../stores/playState/types'
 
   export default {
     components: {
@@ -56,8 +56,7 @@
         e.stopPropagation()
         e.preventDefault()
         for (let f of e.dataTransfer.files) {
-          console.log('File(s) you dragged here: ', f)
-          audio.playFile(f.path)
+          this.$store.commit(playStateTypes.PLAY_FILE, f.path)
         }
         return false;
       }

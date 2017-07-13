@@ -1,6 +1,6 @@
 <template>
   <div class="frame">
-    <img :src="src" alt="">
+    <img :src="src || 'static/images/default-album-cover.jpg'" alt="">
   </div>
 </template>
 
@@ -9,7 +9,6 @@
     props: {
       src: {
         type: String,
-        'default': 'static/images/default-album-cover.jpg',
       }
     },
   }

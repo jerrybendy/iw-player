@@ -17,6 +17,7 @@
   import PlayList from './pages/PlayList.vue'
   import 'muse-ui/dist/muse-ui.css'
   import './styles/style.less'
+  import 'dragula/dist/dragula.css'
 
   export default {
     name: 'app',

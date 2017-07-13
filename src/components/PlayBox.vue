@@ -1,12 +1,15 @@
 <template>
   <div id="play-box" class="mu-paper mu-paper-3">
     <div class="play-box-main">
-      <play-box-album-cover></play-box-album-cover>
+      <play-box-album-cover :src="albumCover"></play-box-album-cover>
       <div class="play-box-controllers">
-        <h1>Boyfriend</h1>
-        <h2>Justin Bieber</h2>
+        <h1>{{ title }}</h1>
+        <h2>{{ artist }}</h2>
         <div class="play-box-controller-buttons">
-          <play-box-control-button size="big" icon="play_arrow"></play-box-control-button>
+          <play-box-control-button size="big"
+                                   :icon="isPlaying ? 'pause' : 'play_arrow'"
+                                   @click.native="togglePlayState"
+          ></play-box-control-button>
           <play-box-control-button icon="skip_previous"></play-box-control-button>
           <play-box-control-button icon="skip_next"></play-box-control-button>
           <play-box-volume-controller></play-box-volume-controller>
@@ -22,6 +25,7 @@
   import PlayBoxControlButton from './PlayBoxControlButton.vue'
   import PlayBoxVolumeController from './PlayBoxVolumeController.vue'
   import PlayBoxProgress from './PlayBoxProgress.vue'
+  import playStateTypes from '../stores/playState/types'
 
   export default {
     components: {
@@ -29,6 +33,31 @@
       PlayBoxControlButton,
       PlayBoxVolumeController,
       PlayBoxProgress,
+    },
+
+    computed: {
+      isPlaying () {
+        return this.$store.state.playState.isPlaying
+      },
+      title () {
+        return this.$store.state.playState.title || '-'
+      },
+      artist () {
+        return this.$store.state.playState.artist || '-'
+      },
+      albumCover () {
+        return this.$store.state.playState.albumCover
+      }
+    },
+
+    methods: {
+      togglePlayState () {
+        if (this.isPlaying) {
+          this.$store.commit(playStateTypes.PAUSE)
+        } else {
+          this.$store.commit(playStateTypes.PLAY)
+        }
+      }
     }
   }
 </script>

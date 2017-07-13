@@ -2,23 +2,41 @@
   <div class="play-box-volume-controller">
     <mu-icon :value="isMute ? 'volume_off' : 'volume_up'" :size="16" color="#DCDCDC" @click="toggleMute"></mu-icon>
     <div class="play-box-volume-controllers-content">
-      <mu-slider v-model="currentVolume" :disabled="isMute" :step="1" :min="0" :max="100"></mu-slider>
+      <mu-slider :value="currentVolume"
+                 :disabled="isMute"
+                 :step="1"
+                 :min="0"
+                 :max="100"
+                 @change="changeVolume"
+      ></mu-slider>
     </div>
   </div>
 </template>
 
 <script>
+  import playStateTypes from '../stores/playState/types'
+
   export default {
     data () {
       return {
-        currentVolume: 40,
-        isMute: false,
+      }
+    },
+
+    computed: {
+      isMute () {
+        return this.$store.state.playState.isMute
+      },
+      currentVolume () {
+        return this.$store.state.playState.volume
       }
     },
 
     methods: {
       toggleMute () {
-        this.isMute = !this.isMute
+        this.$store.commit(playStateTypes.TOGGLE_MUTE)
+      },
+      changeVolume (volume) {
+        this.$store.commit(playStateTypes.CHANGE_GAIN, volume)
       }
     }
   }
