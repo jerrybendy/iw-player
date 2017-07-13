@@ -10,7 +10,6 @@ import playListTypes from '../../stores/playList/types'
 
 
 ipcRenderer.on('soundParser/parse-sound-reply', function (e, arg) {
-  console.log(arg)
   store.commit(playListTypes.UPDATE, arg)
 })
 

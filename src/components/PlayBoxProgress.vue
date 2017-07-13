@@ -15,7 +15,7 @@
   export default {
     computed: {
       duration () {
-        return parseInt(this.$store.state.playState.duration)
+        return parseInt(this.$store.state.playState.current.duration)
       },
       playbackTime () {
         return parseInt(this.$store.state.playState.playbackTime)

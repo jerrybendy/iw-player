@@ -16,13 +16,17 @@ export default {
     isMute: false,
 
     // about current play file
-    id: null,  // current play file ID, no file will be play if it's null
     playbackTime: 0,
-    duration: 0,  // total time length of current file
-    title: '',
-    artist: '',
-    album: '',
-    albumCover: '',
+
+    current: {
+      id: null,  // use the sha256 of path as id
+      title: '',
+      artist: '',
+      album: '',
+      albumCover: '',
+      duration: 0,
+      path: '',
+    }
   },
 
 
@@ -37,11 +41,25 @@ export default {
           state.isPlaying = audio.isPlaying
         })
     },
+
+    /**
+     * Play a file which is in playList
+     */
+    [types.PLAY_FROM_LIST] (state, playListItem) {
+      audio.playFile(playListItem.path)
+        .then((data) => {
+          console.log(data)
+
+          state.isPlaying = audio.isPlaying
+          state.current = playListItem
+        })
+    },
+
     /**
      * Play the audio
      */
     [types.PLAY] (state) {
-      if (!state.id) {
+      if (!state.current.id) {
         alert('No file playing')
         return
       }
@@ -55,6 +73,15 @@ export default {
       audio.pause()
       state.isPlaying = audio.isPlaying
     },
+
+    /**
+     * Stop playing
+     */
+    [types.STOP] (state) {
+      audio.stop()
+      state.isPlaying = audio.isPlaying
+    },
+
     /**
      * Change play position
      */

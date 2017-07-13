@@ -6,9 +6,17 @@
 
 import fs from 'fs'
 import BufferAudio from './BufferAudio'
+import store from '../stores'
+import playStateTypes from '../stores/playState/types'
 
 const $audioContext = new AudioContext()
-const _bufferAudio = new BufferAudio($audioContext)
+const _bufferAudio = new BufferAudio({
+  audioContext: $audioContext,
+  onEndCallback () {
+    // Commit a play-end message when playing completely
+    store.commit(playStateTypes.PLAY_END)
+  }
+})
 
 window.bufferAudio = _bufferAudio
 

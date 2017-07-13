@@ -1,6 +1,8 @@
 <template>
   <div class="frame">
-    <img :src="src || 'static/images/default-album-cover.jpg'" alt="">
+    <img :src="src || 'static/images/default-album-cover.jpg'"
+         onerror="this.src = 'static/images/default-album-cover.jpg'"
+         alt="">
   </div>
 </template>
 

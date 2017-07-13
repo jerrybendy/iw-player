@@ -13,14 +13,16 @@ export default class BufferAudio {
    *
    * @param {AudioContext} audioContext
    * @param {AudioBuffer} buffer
+   * @param {function|null} onEndCallback
    */
-  constructor(audioContext, buffer) {
+  constructor({audioContext, buffer = null, onEndCallback}) {
     this._audioContext = audioContext;
     this._buffer = buffer; // AudioBuffer
     this._source = null; // AudioBufferSourceNode
     this._playbackTime = 0; // time of the audio playback, seconds
     this._startTimestamp = 0; // timestamp of last playback start, milliseconds
     this._isPlaying = false;
+    this._onEndCallback = onEndCallback
   }
 
 
@@ -47,7 +49,7 @@ export default class BufferAudio {
     this._source.buffer = this._buffer;
     this._source.connect(this._audioContext.destination);
     // Bind the callback to this
-    this._source.onended = this.__bindOnEndEvent()
+    this.__bindOnEndEvent()
   }
 
 
@@ -124,14 +126,16 @@ export default class BufferAudio {
   /**
    * Callback for any time playback stops/pauses
    *
-   * @param endEvent
    */
-  __endOfPlayback (endEvent) {
-    console.log(endEvent);
+  __endOfPlayback (e) {
     console.log("end of playback");
 
     // If playback stopped because end of buffer was reached
     if (this._isPlaying) this._playbackTime = 0;
     this._isPlaying = false;
+
+    if (this._onEndCallback && typeof this._onEndCallback === 'function') {
+      this._onEndCallback()
+    }
   }
 }

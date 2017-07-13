@@ -1,10 +1,10 @@
 <template>
   <div id="play-box" class="mu-paper mu-paper-3">
     <div class="play-box-main">
-      <play-box-album-cover :src="albumCover"></play-box-album-cover>
+      <play-box-album-cover :src="current.albumCover"></play-box-album-cover>
       <div class="play-box-controllers">
-        <h1>{{ title }}</h1>
-        <h2>{{ artist }}</h2>
+        <h1>{{ current.title || '-' }}</h1>
+        <h2>{{ current.artist || '-' }}</h2>
         <div class="play-box-controller-buttons">
           <play-box-control-button size="big"
                                    :icon="isPlaying ? 'pause' : 'play_arrow'"
@@ -39,15 +39,9 @@
       isPlaying () {
         return this.$store.state.playState.isPlaying
       },
-      title () {
-        return this.$store.state.playState.title || '-'
+      current () {
+        return this.$store.state.playState.current
       },
-      artist () {
-        return this.$store.state.playState.artist || '-'
-      },
-      albumCover () {
-        return this.$store.state.playState.albumCover
-      }
     },
 
     methods: {

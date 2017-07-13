@@ -1,6 +1,9 @@
 <template>
-  <div class="play-list-item">
-    <img class="play-list-item-album-cover" :src="data.albumCover || 'static/images/default-album-cover.jpg'" alt="">
+  <div class="play-list-item" @dblclick="playCurrent">
+    <img class="play-list-item-album-cover"
+         :src="data.albumCover || 'static/images/default-album-cover.jpg'"
+         onerror="this.src = 'static/images/default-album-cover.jpg'"
+         alt="">
     <div class="play-list-item-info">
       <h3>{{ data.title || 'No name' }}</h3>
       <h4>{{ data.artist || '-' }}</h4>
@@ -10,12 +13,21 @@
 </template>
 
 <script>
+  import playStateTypes from '../stores/playState/types'
+
   export default {
     props: {
       data: {
         type: Object,
         'default': {}
       },
+    },
+
+    methods: {
+      playCurrent () {
+        this.$store.commit(playStateTypes.STOP)
+        this.$store.commit(playStateTypes.PLAY_FROM_LIST, this.data)
+      }
     }
   }
 </script>
