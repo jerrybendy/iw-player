@@ -9,4 +9,5 @@ const prefix = 'PLAY_LIST'
 export default {
   ADD: `${prefix}/ADD`,  // add a new sound into list
   UPDATE: `${prefix}/UPDATE`,  // update sound info
+  SET_LIST: `${prefix}/SET_LIST`,
 }

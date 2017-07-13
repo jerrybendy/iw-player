@@ -10,6 +10,7 @@ const {app} = require('electron')
 
 require('./ipc/soundParser')
 require('./ipc/encrypt')
+require('./ipc/playListDb')
 
 module.exports = function (win) {
 

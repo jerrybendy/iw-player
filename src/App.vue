@@ -13,6 +13,7 @@
 </template>
 
 <script>
+  import playListDbClient from './lib/ipc/playListDbClient'
   import PlayBox from './components/PlayBox.vue'
   import PlayList from './pages/PlayList.vue'
   import 'muse-ui/dist/muse-ui.css'
@@ -25,6 +26,14 @@
       PlayBox,
       PlayList,
     },
+
+    created () {
+      // get all music data
+      playListDbClient.getAllData()
+
+
+    },
+
     data () {
       return {
         currentTab: 'PlayList',
