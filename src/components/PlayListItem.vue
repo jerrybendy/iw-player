@@ -1,5 +1,5 @@
 <template>
-  <div class="play-list-item" @dblclick="playCurrent">
+  <div class="play-list-item" :class="theClass" @dblclick="playCurrent">
     <img class="play-list-item-album-cover"
          :src="data.albumCover || 'static/images/default-album-cover.jpg'"
          onerror="this.src = 'static/images/default-album-cover.jpg'"
@@ -8,11 +8,13 @@
       <h3>{{ data.title || 'No name' }}</h3>
       <h4>{{ data.artist || '-' }}</h4>
     </div>
-    <div class="play-list-item-time">{{ data.duration | numberToTime }}</div>
+    <div v-if="!theClass.active" class="play-list-item-time">{{ data.duration | numberToTime }}</div>
+    <loader-line-scale v-else :pause="!isPlaying"></loader-line-scale>
   </div>
 </template>
 
 <script>
+  import LoaderLineScale from './LoaderLineScale.vue'
   import playStateTypes from '../stores/playState/types'
 
   export default {
@@ -20,6 +22,21 @@
       data: {
         type: Object,
         'default': {}
+      },
+    },
+
+    components: {
+      LoaderLineScale,
+    },
+
+    computed: {
+      theClass () {
+        return {
+          active: this.data.id === this.$store.state.playState.current.id
+        }
+      },
+      isPlaying () {
+        return this.$store.state.playState.isPlaying
       },
     },
 
@@ -47,6 +64,10 @@
 
     &:hover {
       background-color: lighten(@MP-BACKGROUND-COLOR, 5%);
+    }
+
+    &.active {
+      background-color: #CACACA;
     }
   }
 
@@ -76,6 +97,12 @@
       color: @MP-TEXT-COLOR;
       margin: 0;
       .ellipsis();
+    }
+
+    .play-list-item.active & {
+      h3, h4 {
+        color: #2C2C2C;
+      }
     }
   }
 
