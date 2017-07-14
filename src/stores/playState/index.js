@@ -15,9 +15,6 @@ export default {
     volume: 50,
     isMute: false,
 
-    // about current play file
-    playbackTime: 0,
-
     current: {
       id: null,  // use the sha256 of path as id
       title: '',
@@ -89,7 +86,6 @@ export default {
         time = state.duration
       }
       audio.seek(time)
-      state.playbackTime = time
       state.isPlaying = audio.isPlaying
     },
     /**

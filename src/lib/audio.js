@@ -15,6 +15,9 @@ const _bufferAudio = new BufferAudio({
   onEndCallback () {
     // Commit a play-end message when playing completely
     store.commit(playStateTypes.PLAY_END)
+    // Auto play the next sound
+    const nextSound = store.getters.nextSound
+    store.commit(playStateTypes.PLAY_FROM_LIST, nextSound)
   }
 })
 
@@ -52,7 +55,19 @@ export default {
 
   get isPlaying () {
     return _bufferAudio._isPlaying
-  }
+  },
+
+  /**
+   * Current playing time
+   * @returns {number} time in second
+   */
+  get currentTime () {
+    if (!_bufferAudio._isPlaying) {
+      return _bufferAudio._playbackTime
+    }
+    return (Date.now() - _bufferAudio._startTimestamp)/1000 + _bufferAudio._playbackTime
+  },
+
 }
 
 

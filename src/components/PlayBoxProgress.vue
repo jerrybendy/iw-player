@@ -1,6 +1,5 @@
 <template>
   <div class="play-box-progress">
-    <!--<mu-linear-progress mode="determinate" :value="50"></mu-linear-progress>-->
     <mu-slider :step="1" :min="0" :max="duration"
                :value="playbackTime"
                :disabled="duration === 0"
@@ -10,15 +9,33 @@
 </template>
 
 <script>
+  import audio from '../lib/audio'
   import playStateTypes from '../stores/playState/types'
 
+  let getProgressTimer
+
   export default {
+
+    created () {
+      getProgressTimer = setInterval(() => {
+        this.playbackTime = audio.currentTime
+      }, 500)
+    },
+
+    destroyed () {
+      if (getProgressTimer)
+        clearInterval(getProgressTimer)
+    },
+
+    data () {
+      return {
+        playbackTime: 0,
+      }
+    },
+
     computed: {
       duration () {
         return parseInt(this.$store.state.playState.current.duration)
-      },
-      playbackTime () {
-        return parseInt(this.$store.state.playState.playbackTime)
       },
     },
 
@@ -39,6 +56,11 @@
 
     .mu-slider {
       margin: 0;
+      cursor: pointer;
+
+      .mu-slider-thumb {
+        display: none !important;
+      }
     }
   }
 
