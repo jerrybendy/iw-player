@@ -10,8 +10,8 @@
                                    :icon="isPlaying ? 'pause' : 'play_arrow'"
                                    @click.native="togglePlayState"
           ></play-box-control-button>
-          <play-box-control-button icon="skip_previous"></play-box-control-button>
-          <play-box-control-button icon="skip_next"></play-box-control-button>
+          <play-box-control-button icon="skip_previous" @click.native="prevSound"></play-box-control-button>
+          <play-box-control-button icon="skip_next" @click.native="nextSound"></play-box-control-button>
           <play-box-volume-controller></play-box-volume-controller>
         </div>
       </div>
@@ -51,13 +51,22 @@
         } else {
           this.$store.commit(playStateTypes.PLAY)
         }
-      }
+      },
+      prevSound () {
+        const prev = this.$store.getters.prevSound
+        this.$store.commit(playStateTypes.PLAY_FROM_LIST, prev)
+      },
+      nextSound () {
+        const next = this.$store.getters.nextSound
+        this.$store.commit(playStateTypes.PLAY_FROM_LIST, next)
+      },
     }
   }
 </script>
 
 <style lang="less">
   @import '../styles/var';
+  @import '../styles/mixins';
 
   #play-box {
     padding: 10px;
@@ -71,6 +80,7 @@
 
     .play-box-controllers {
       flex: 1;
+      width: 0;
 
       // Song's name
       h1 {
@@ -78,6 +88,7 @@
         font-size: 14px;
         font-weight: 500;
         margin: 5px 0 0;
+        .ellipsis();
       }
 
       // Artist or album
@@ -86,6 +97,7 @@
         font-size: 12px;
         font-weight: 200;
         margin: 0 0 10px;
+        .ellipsis();
       }
     }
 

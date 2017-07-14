@@ -9,6 +9,7 @@ import types from './types'
 import soundParserClient from '../../lib/ipc/soundParserClient'
 import encryptClient from '../../lib/ipc/encryptClient'
 import playListDbClient from '../../lib/ipc/playListDbClient'
+import utils from './utils'
 
 const DEFAULT_SOUND = {
   id: null,  // use the sha256 of path as id
@@ -18,25 +19,6 @@ const DEFAULT_SOUND = {
   albumCover: '',
   duration: 0,
   path: '',
-}
-
-const utils = {
-  isIdExists (list, id) {
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].id === id) {
-        return true
-      }
-    }
-    return false
-  },
-  getItemIndex (list, id) {
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].id === id) {
-        return i
-      }
-    }
-    return false
-  },
 }
 
 export default {

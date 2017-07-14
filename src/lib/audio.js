@@ -22,24 +22,16 @@ window.bufferAudio = _bufferAudio
 
 export default {
 
-  playFile (filePath) {
+  async playFile (filePath) {
     // get the ArrayBuffer object for current sound
-    return getBuffer(filePath)
-      .then(buffer => {
-        _bufferAudio
-          .initNewBuffer(buffer)
-          .play()
-
-        return {
-          source: _bufferAudio._source,
-          duration: buffer.duration,
-          length: buffer.length,
-          sampleRate: buffer.sampleRate,
-        }
-      })
+    const buffer = await getBuffer(filePath)
       .catch(e => {
         alert(e.message)
       })
+
+    _bufferAudio
+      .initNewBuffer(buffer)
+      .play()
   },
 
   play () {

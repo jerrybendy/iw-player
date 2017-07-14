@@ -46,12 +46,11 @@ export default {
      * Play a file which is in playList
      */
     [types.PLAY_FROM_LIST] (state, playListItem) {
+      state.current = Object.assign({}, playListItem)
       audio.playFile(playListItem.path)
-        .then((data) => {
-          console.log(data)
-
+        .then(() => {
+          // this is async op, will not effect on vue dev-tool
           state.isPlaying = audio.isPlaying
-          state.current = playListItem
         })
     },
 
@@ -112,5 +111,10 @@ export default {
     [types.TOGGLE_MUTE] (state) {
       state.isMute = !state.isMute
     },
+  },
+
+
+  getters: {
+
   },
 }
