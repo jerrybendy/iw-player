@@ -53,6 +53,10 @@ export default {
     _bufferAudio.seek(playbackTime)
   },
 
+  setVolume (volume) {
+    _bufferAudio._gainNode.gain.value = volume / 100
+  },
+
   get isPlaying () {
     return _bufferAudio._isPlaying
   },

@@ -99,6 +99,7 @@ export default {
      * Change volume
      */
     [types.CHANGE_GAIN] (state, volume) {
+      audio.setVolume(volume)
       state.volume = volume
     },
     /**
@@ -106,6 +107,7 @@ export default {
      */
     [types.TOGGLE_MUTE] (state) {
       state.isMute = !state.isMute
+      audio.setVolume(state.isMute ? 0 : state.volume)
     },
   },
 

@@ -17,6 +17,7 @@ export default class BufferAudio {
    */
   constructor({audioContext, buffer = null, onEndCallback}) {
     this._audioContext = audioContext;
+    this._gainNode = this._audioContext.createGain()
     this._buffer = buffer; // AudioBuffer
     this._source = null; // AudioBufferSourceNode
     this._playbackTime = 0; // time of the audio playback, seconds
@@ -47,7 +48,8 @@ export default class BufferAudio {
   initSource() {
     this._source = this._audioContext.createBufferSource();
     this._source.buffer = this._buffer;
-    this._source.connect(this._audioContext.destination);
+    this._source.connect(this._gainNode);
+    this._gainNode.connect(this._audioContext.destination)
     // Bind the callback to this
     this.__bindOnEndEvent()
   }
