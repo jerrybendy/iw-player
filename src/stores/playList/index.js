@@ -39,7 +39,7 @@ export default {
       const soundId = encryptClient.sha256(sound.path)
 
       // check if this sound is already exists
-      if (utils.isIdExists(state.list, soundId)) {
+      if (utils.isIdExists(soundId)) {
         console.log('[INFO] Sound is already exist')
         return
       }
@@ -64,7 +64,7 @@ export default {
       if (!info.id) {
         return
       }
-      const index = utils.getItemIndex(state.list, info.id)
+      const index = utils.getItemIndex(info.id)
       if (index === false) {
         return
       }

@@ -17,7 +17,7 @@ const _bufferAudio = new BufferAudio({
     store.commit(playStateTypes.PLAY_END)
     // Auto play the next sound
     const nextSound = store.getters.nextSound
-    store.commit(playStateTypes.PLAY_FROM_LIST, nextSound)
+    store.dispatch(playStateTypes.PLAY_FROM_LIST, nextSound)
   }
 })
 
@@ -25,12 +25,19 @@ window.bufferAudio = _bufferAudio
 
 export default {
 
+  async loadFile (filePath, seekToTime) {
+    const buffer = await getBuffer(filePath)
+      .catch(e => alert(e.message))
+
+    _bufferAudio
+      .initNewBuffer(buffer)
+      .load(seekToTime)
+  },
+
   async playFile (filePath) {
     // get the ArrayBuffer object for current sound
     const buffer = await getBuffer(filePath)
-      .catch(e => {
-        alert(e.message)
-      })
+      .catch(e => alert(e.message))
 
     _bufferAudio
       .initNewBuffer(buffer)

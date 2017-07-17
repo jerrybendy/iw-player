@@ -6,11 +6,12 @@
 
 const fs = require('fs')
 const path = require('path')
-const {app} = require('electron')
+const {app, ipcMain} = require('electron')
 
 require('./ipc/soundParser')
 require('./ipc/encrypt')
 require('./ipc/playListDb')
+require('./ipc/globalWindow')
 
 module.exports = function (win) {
 
@@ -26,5 +27,13 @@ module.exports = function (win) {
         }
       })
     }
+  })
+
+
+  /**
+   * Print console messages
+   */
+  ipcMain.on('console', function (e, message) {
+    console.log(message)
   })
 }

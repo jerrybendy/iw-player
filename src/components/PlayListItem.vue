@@ -43,7 +43,7 @@
     methods: {
       playCurrent () {
         this.$store.commit(playStateTypes.STOP)
-        this.$store.commit(playStateTypes.PLAY_FROM_LIST, this.data)
+        this.$store.dispatch(playStateTypes.PLAY_FROM_LIST, this.data)
       }
     }
   }

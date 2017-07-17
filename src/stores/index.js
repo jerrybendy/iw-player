@@ -25,7 +25,7 @@ export default new Vuex.Store({
      */
     prevSound (state) {
       const list = state.playList.list
-      let index = playListUtils.getItemIndex(list, state.playState.current.id)
+      let index = playListUtils.getItemIndex(state.playState.current.id)
       // next sound
       if (index === false || index === 0) {
         index = list.length - 1
@@ -40,7 +40,7 @@ export default new Vuex.Store({
      */
     nextSound (state) {
       const list = state.playList.list
-      let index = playListUtils.getItemIndex(list, state.playState.current.id)
+      let index = playListUtils.getItemIndex(state.playState.current.id)
       // next sound
       if (index === false || index === list.length - 1) {
         index = 0

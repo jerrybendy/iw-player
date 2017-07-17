@@ -1,6 +1,6 @@
 <template>
   <div class="play-box-control-button" :class="`play-box-control-button-${ size }`">
-    <mu-icon :value="icon" color="#DCDCDC" :size="iconSizeMap[size]" />
+    <mu-icon :value="icon" color="#DCDCDC" :size="iconSizeMap[size]"></mu-icon>
   </div>
 </template>
 

@@ -65,6 +65,24 @@ export default class BufferAudio {
 
 
   /**
+   * Load only
+   * Load current buffer as BufferSource and seek to specified time, without playing
+   *
+   * @param seekToTime
+   */
+  load (seekToTime) {
+    if (this._isPlaying)
+      this.stop()
+
+    this.initSource()
+
+    if (seekToTime) {
+      this.seek(seekToTime)
+    }
+  }
+
+
+  /**
    * Play the currently loaded buffer
    */
   play () {

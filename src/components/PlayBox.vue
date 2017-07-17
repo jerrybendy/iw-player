@@ -1,5 +1,8 @@
 <template>
   <div id="play-box" class="mu-paper mu-paper-3">
+    <div class="play-box-draggable">
+      <mu-icon value="close" color="000000" :size="20" @click="closeWindow"></mu-icon>
+    </div>
     <div class="play-box-main">
       <play-box-album-cover :src="current.albumCover"></play-box-album-cover>
       <div class="play-box-controllers">
@@ -21,6 +24,7 @@
 </template>
 
 <script>
+  import globalWindowClient from '../lib/ipc/globalWindowClient'
   import PlayBoxAlbumCover from './PlayBoxAlbumCover.vue'
   import PlayBoxControlButton from './PlayBoxControlButton.vue'
   import PlayBoxVolumeController from './PlayBoxVolumeController.vue'
@@ -54,11 +58,14 @@
       },
       prevSound () {
         const prev = this.$store.getters.prevSound
-        this.$store.commit(playStateTypes.PLAY_FROM_LIST, prev)
+        this.$store.dispatch(playStateTypes.PLAY_FROM_LIST, prev)
       },
       nextSound () {
         const next = this.$store.getters.nextSound
-        this.$store.commit(playStateTypes.PLAY_FROM_LIST, next)
+        this.$store.dispatch(playStateTypes.PLAY_FROM_LIST, next)
+      },
+      closeWindow () {
+        globalWindowClient.closeMainWindow()
       },
     }
   }
@@ -69,7 +76,8 @@
   @import '../styles/mixins';
 
   #play-box {
-    padding: 10px;
+    position: relative;
+    padding: 25px 10px 10px;
     border-radius: 5px 5px 0 0;
     background: linear-gradient(to bottom,  #393939 0%,#262626 100%);
 
@@ -104,6 +112,30 @@
     .play-box-controller-buttons {
       display: flex;
       align-items: center;
+    }
+
+    .play-box-draggable {
+      -webkit-app-region: drag;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 25px;
+      padding: 3px 0 0 5px;
+      background-color: transparent;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, .2);
+      }
+
+      .mu-icon {
+        cursor: pointer;
+        -webkit-app-region: no-drag;
+
+        &:hover {
+          color: #c5c5c5 !important;
+        }
+      }
     }
   }
 

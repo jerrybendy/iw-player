@@ -12,7 +12,7 @@ export default {
 
   state: {
     isPlaying: false,
-    volume: 50,
+    volume: 100,
     isMute: false,
 
     current: {
@@ -29,26 +29,10 @@ export default {
 
   mutations: {
     /**
-     * Play a file
+     * Only set current playing sound, without play it
      */
-    [types.PLAY_FILE] (state, filePath) {
-      audio.playFile(filePath)
-        .then((data) => {
-          console.log(data)
-          state.isPlaying = audio.isPlaying
-        })
-    },
-
-    /**
-     * Play a file which is in playList
-     */
-    [types.PLAY_FROM_LIST] (state, playListItem) {
+    [types.SET_CURRENT] (state, playListItem) {
       state.current = Object.assign({}, playListItem)
-      audio.playFile(playListItem.path)
-        .then(() => {
-          // this is async op, will not effect on vue dev-tool
-          state.isPlaying = audio.isPlaying
-        })
     },
 
     /**
@@ -105,14 +89,53 @@ export default {
     /**
      * Set is mute
      */
-    [types.TOGGLE_MUTE] (state) {
-      state.isMute = !state.isMute
+    [types.TOGGLE_MUTE] (state, isMute) {
+      state.isMute = typeof isMute === 'boolean' ? isMute : !state.isMute
       audio.setVolume(state.isMute ? 0 : state.volume)
     },
   },
 
 
-  getters: {
+  actions: {
+    /**
+     * Play a file which is in playList
+     * Can set a callback function when play is started
+     */
+    [types.PLAY_FROM_LIST] (context, playListItem) {
+      context.commit(types.SET_CURRENT, playListItem)
 
+      audio.playFile(playListItem.path)
+        .then(() => {
+          context.commit(types.CHANGE_IS_PLAYING, audio.isPlaying)
+        })
+    },
+
+    /**
+     *
+     * @param context
+     * @param playListItem
+     */
+    [types.LOAD_FROM_LIST_AND_SEEK] (context, playListItem) {
+      let seek = playListItem.seek || 0,
+        volume
+
+      if (seek) {
+        delete playListItem.seek
+      }
+      if (playListItem.volume) {
+        volume = playListItem.volume
+        delete playListItem.volume
+      }
+
+      context.commit(types.SET_CURRENT, playListItem)
+
+      audio.loadFile(playListItem.path, seek)
+        .then(() => {
+          context.commit(types.CHANGE_IS_PLAYING, audio.isPlaying)
+          if (volume) {
+            context.commit(types.CHANGE_GAIN, volume)
+          }
+        })
+    },
   },
 }

@@ -39,3 +39,9 @@ ipcMain.on('playListDb/update', function (e, id, data) {
 ipcMain.on('playListDb/get-all-data', function (e) {
   e.sender.send('playListDb/get-all-data-reply', db.getState())
 })
+
+ipcMain.on('playListDb/save-current-state', function (e, state) {
+  db.get('current')
+    .assign(state)
+    .write()
+})

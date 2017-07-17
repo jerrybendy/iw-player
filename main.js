@@ -2,7 +2,6 @@
  *
  * @author    Jerry Bendy
  * @since     7/7/2017
- * @copyright MicroBenefits
  */
 
 const {app, BrowserWindow} = require('electron')
@@ -14,18 +13,7 @@ app.on('ready', function () {
 
   vueDevTools.install()
 
-  // Initialize the window to our specified dimensions
-  win = new BrowserWindow({
-    title: 'Music Player',
-    // frame: false,
-    width: 320,
-    height: 640,
-    minWidth: 320,
-    resizable: false,
-    maximizable: false,
-    fullscreenable: false,
-    backgroundColor: '#383838',
-  });
+  createWindow()
 
   // load main window handler
   require('./main/mainHandler')(win);
@@ -50,3 +38,18 @@ app.on('activate', () => {
 app.on('window-all-closed', function () {
   app.quit();
 });
+
+function createWindow () {
+  // Initialize the window to our specified dimensions
+  win = new BrowserWindow({
+    title: 'Music Player',
+    frame: false,
+    width: 320,
+    height: 640,
+    minWidth: 320,
+    resizable: false,
+    maximizable: false,
+    fullscreenable: false,
+    backgroundColor: '#383838',
+  });
+}
