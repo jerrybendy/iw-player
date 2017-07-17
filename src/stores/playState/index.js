@@ -31,7 +31,7 @@ export default {
     /**
      * Only set current playing sound, without play it
      */
-    [types.SET_CURRENT] (state, playListItem) {
+    [types._SET_CURRENT] (state, playListItem) {
       state.current = Object.assign({}, playListItem)
     },
 
@@ -72,12 +72,6 @@ export default {
       audio.seek(time)
       state.isPlaying = audio.isPlaying
     },
-    /**
-     * End
-     */
-    [types.PLAY_END] (state) {
-      state.isPlaying = audio.isPlaying
-    },
 
     /**
      * Change volume
@@ -109,7 +103,7 @@ export default {
      * Can set a callback function when play is started
      */
     [types.PLAY_FROM_LIST] (context, playListItem) {
-      context.commit(types.SET_CURRENT, playListItem)
+      context.commit(types._SET_CURRENT, playListItem)
 
       audio.playFile(playListItem.path)
         .then(() => {
@@ -134,7 +128,7 @@ export default {
         delete playListItem.volume
       }
 
-      context.commit(types.SET_CURRENT, playListItem)
+      context.commit(types._SET_CURRENT, playListItem)
 
       audio.loadFile(playListItem.path, seek)
         .then(() => {

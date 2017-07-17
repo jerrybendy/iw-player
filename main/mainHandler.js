@@ -33,7 +33,7 @@ module.exports = function (win) {
   /**
    * Print console messages
    */
-  ipcMain.on('console', function (e, message) {
-    console.log(message)
+  ipcMain.on('console', function (e, type, message) {
+    console.log(`CLIENT ${type}`, message)
   })
 }

@@ -22,9 +22,6 @@ ipcRenderer.on('playListDb/get-all-data-reply', function (e, data) {
 
   currentItem = currentItem.length > 0 ? currentItem[0] : false
 
-  ipcRenderer.send('console', current)
-  ipcRenderer.send('console', currentItem)
-
   if (id && currentItem) {
     currentItem.seek = current.playbackTime
     currentItem.volume = current.volume
@@ -60,4 +57,7 @@ export default {
     ipcRenderer.send('playListDb/update', id, data)
   },
 
+  removeSync (id) {
+    return ipcRenderer.sendSync('playListDb/remove-sync', id)
+  },
 }

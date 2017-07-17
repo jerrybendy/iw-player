@@ -8,9 +8,12 @@ import {ipcRenderer} from 'electron'
 import store from '../../stores'
 import playListTypes from '../../stores/playList/types'
 
-
 ipcRenderer.on('soundParser/parse-sound-reply', function (e, arg) {
-  store.commit(playListTypes.UPDATE, arg)
+  console.log(arg)
+  if (arg.error) {
+  } else {
+    store.commit(playListTypes.UPDATE, arg)
+  }
 })
 
 

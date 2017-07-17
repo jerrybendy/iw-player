@@ -5,6 +5,7 @@
  */
 
 const path = require('path')
+const fs = require('fs')
 const {app, ipcMain} = require('electron')
 const lowDb = require('lowdb')
 const fileAsync = require('lowdb/lib/storages/file-async')
@@ -47,4 +48,22 @@ ipcMain.on('playListDb/save-current-state', function (e, state) {
   db.get('current')
     .assign(state)
     .write()
+})
+
+ipcMain.on('playListDb/remove-sync', function (e, id) {
+  console.log(`[LOG] Remove item from DB: ${id}`)
+
+  const albumCover = db.get('list').find({id}).get('albumCover').value()
+
+  // Remove album cover file
+  if (albumCover && /^file:\/\//i.test(albumCover)) {
+    let albumCoverPath = albumCover.substr(7)
+    fs.unlink(albumCoverPath, function () {})
+  }
+
+  db.get('list')
+    .remove({id})
+    .write()
+
+  e.returnValue = true
 })

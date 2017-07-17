@@ -13,8 +13,9 @@ const $audioContext = new AudioContext()
 const _bufferAudio = new BufferAudio({
   audioContext: $audioContext,
   onEndCallback () {
-    // Commit a play-end message when playing completely
-    store.commit(playStateTypes.PLAY_END)
+    // Set playing state to pause
+    store.commit(playStateTypes.CHANGE_IS_PLAYING, false)
+
     // Auto play the next sound
     const nextSound = store.getters.nextSound
     store.dispatch(playStateTypes.PLAY_FROM_LIST, nextSound)

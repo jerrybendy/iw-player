@@ -9,8 +9,7 @@ const prefix = 'PLAY_STATE'
 export default {
   // mutations
   PLAY: `${prefix}/PLAY`,
-  SET_CURRENT: `${prefix}/SET_CURRENT`, // only set current playing sound, without play it
-  PLAY_END: `${prefix}/PLAY_END`,
+  _SET_CURRENT: `${prefix}/_SET_CURRENT`, // only set current playing sound, without play it
   PAUSE: `${prefix}/PAUSE`,
   STOP: `${prefix}/STOP`,
   SEEK: `${prefix}/SEEK`,

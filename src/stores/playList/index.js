@@ -10,6 +10,7 @@ import soundParserClient from '../../lib/ipc/soundParserClient'
 import encryptClient from '../../lib/ipc/encryptClient'
 import playListDbClient from '../../lib/ipc/playListDbClient'
 import utils from './utils'
+import playStateTypes from '../playState/types'
 
 const DEFAULT_SOUND = {
   id: null,  // use the sha256 of path as id
@@ -50,11 +51,11 @@ export default {
 
       state.list.push(newSound)
 
-      // start a parser to parse this sound metadata
-      soundParserClient.sendToParser(newSound.id, newSound.path)
-
       // add to db
       playListDbClient.insert(newSound)
+
+      // start a parser to parse this sound metadata
+      soundParserClient.sendToParser(newSound.id, newSound.path)
     },
 
     /**
@@ -82,5 +83,34 @@ export default {
     [types.SET_LIST] (state, list) {
       state.list = list
     },
+
+    /**
+     * Remove an item from list
+     */
+    [types._REMOVE] (state, id) {
+      const index = utils.getItemIndex(id)
+      if (index === false)
+        return
+      state.list.splice(index, 1)
+    },
   },
+
+  actions: {
+    /**
+     * Remove an item from play list
+     */
+    [types.REMOVE] ({commit, dispatch, rootState, getters}, id) {
+      // if the current playing sound id equals the id which will be removed, stop it first
+      if (rootState.playState.current.id === id) {
+        commit(playStateTypes.STOP)
+        // load next sound, without playing
+        dispatch(playStateTypes.LOAD_FROM_LIST_AND_SEEK, getters.nextSound)
+      }
+
+      // remove it from db
+      if (playListDbClient.removeSync(id)) {
+        commit(types._REMOVE, id)
+      }
+    },
+  }
 }

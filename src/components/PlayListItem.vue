@@ -1,5 +1,5 @@
 <template>
-  <div class="play-list-item" :class="theClass" @dblclick="playCurrent">
+  <div class="play-list-item" :class="theClass" @dblclick="playCurrent" @contextmenu="showMenu">
     <img class="play-list-item-album-cover"
          :src="data.albumCover || 'static/images/default-album-cover.jpg'"
          onerror="this.src = 'static/images/default-album-cover.jpg'"
@@ -16,6 +16,7 @@
 <script>
   import LoaderLineScale from './LoaderLineScale.vue'
   import playStateTypes from '../stores/playState/types'
+  import playListItemMenu from '../lib/menus/playListItemMenu'
 
   export default {
     props: {
@@ -44,6 +45,10 @@
       playCurrent () {
         this.$store.commit(playStateTypes.STOP)
         this.$store.dispatch(playStateTypes.PLAY_FROM_LIST, this.data)
+      },
+      showMenu (e) {
+        e.preventDefault()
+        playListItemMenu(this.data)
       }
     }
   }
