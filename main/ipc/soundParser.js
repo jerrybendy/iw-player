@@ -37,7 +37,7 @@ ipcMain.on('soundParser/parse-sound', (e, id, filePath) => {
     if (metadata.picture.length > 0) {
       const {format = '', data = null} = metadata.picture[0]
       if (data && data.length > 0) {
-        const albumCoverFolder = path.resolve(app.getPath('appData'), app.getName(), 'cache', 'album-covers')
+        const albumCoverFolder = path.resolve(app.getPath('appData'), app.getName(), 'album-covers')
         if (!fs.existsSync(albumCoverFolder)) {
           fs.mkdirSync(albumCoverFolder)
         }
@@ -60,6 +60,7 @@ ipcMain.on('soundParser/parse-sound', (e, id, filePath) => {
 
 
   function sendErrorReply(message) {
+    console.log(`[ERROR] Parse sound failed, ${message}`)
     e.sender.send('soundParser/parse-sound-reply', {
       id: id,
       error: message,

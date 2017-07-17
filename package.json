@@ -1,5 +1,6 @@
 {
-  "name": "music-player",
+  "name": "iw-player",
+  "productName": "IWPlayer",
   "version": "0.1.0",
   "description": "A simple music player for developers",
   "author": "Jerry Bendy <jerry@icewingcc.com>",

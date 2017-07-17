@@ -14,7 +14,7 @@ export default {
    * @returns {boolean}
    */
   isIdExists (id) {
-    const list = store.state.playList
+    const list = store.state.playList.list
     for (let i = 0; i < list.length; i++) {
       if (list[i].id === id) {
         return true
@@ -30,7 +30,7 @@ export default {
    * @returns {*}
    */
   getItemIndex (id) {
-    const list = store.state.playList
+    const list = store.state.playList.list
     for (let i = 0; i < list.length; i++) {
       if (list[i].id === id) {
         return i
@@ -46,7 +46,7 @@ export default {
    * @returns {*}
    */
   getItemById (id) {
-    const list = store.state.playList
+    const list = store.state.playList.list
     if (!id)
       return false
 

@@ -25,11 +25,12 @@ db.defaults({
 
 
 ipcMain.on('playListDb/insert', function (e, data) {
-  console.log('Insert')
+  console.log('[LOG] Insert a new sound: ' + data.id)
   db.get('list').push(data).write()
 })
 
 ipcMain.on('playListDb/update', function (e, id, data) {
+  console.log('[LOG] Update sound: ' + id)
   db.get('list')
     .find({id: id})
     .assign(data)
@@ -37,10 +38,12 @@ ipcMain.on('playListDb/update', function (e, id, data) {
 })
 
 ipcMain.on('playListDb/get-all-data', function (e) {
+  console.log('[LOG] Get all data from playList DB')
   e.sender.send('playListDb/get-all-data-reply', db.getState())
 })
 
 ipcMain.on('playListDb/save-current-state', function (e, state) {
+  console.log('[LOG] Save current playing state to DB')
   db.get('current')
     .assign(state)
     .write()

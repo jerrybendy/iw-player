@@ -93,6 +93,13 @@ export default {
       state.isMute = typeof isMute === 'boolean' ? isMute : !state.isMute
       audio.setVolume(state.isMute ? 0 : state.volume)
     },
+
+    /**
+     * Change is music is playing currently
+     */
+    [types.CHANGE_IS_PLAYING] (state, isPlaying) {
+      state.isPlaying = isPlaying
+    },
   },
 
 
