@@ -4,8 +4,8 @@
 
     <mu-tabs id="main-nav" :value="currentTab" @change="changeTab">
       <mu-tab value="PlayList" icon="queue_music"></mu-tab>
-      <mu-tab value="2" icon="album"></mu-tab>
-      <mu-tab value="3" icon="radio"></mu-tab>
+      <!--<mu-tab value="2" icon="album"></mu-tab>-->
+      <!--<mu-tab value="3" icon="radio"></mu-tab>-->
     </mu-tabs>
 
     <play-list v-show="currentTab === 'PlayList'" class="main-page-content"></play-list>
